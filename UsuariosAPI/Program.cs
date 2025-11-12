@@ -1,5 +1,14 @@
+using Microsoft.EntityFrameworkCore;
+using UsuariosAPI.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
+var connString = builder.Configuration.GetConnectionString("UsuarioConnection");
+builder.Services.AddDbContext<UsuarioDbContext>
+    (opts =>
+    {
+        opts.UseMySql(connString, ServerVersion.AutoDetect(connString));
+    });
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
