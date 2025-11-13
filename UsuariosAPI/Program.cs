@@ -2,8 +2,12 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using UsuariosAPI.Data;
 using UsuariosAPI.Models;
+using UsuariosAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Configurar URLs
+builder.WebHost.UseUrls("http://localhost:5000", "https://localhost:5001");
 
 var connString = builder.Configuration.GetConnectionString("UsuarioConnection");
 builder.Services.AddDbContext<UsuarioDbContext>
@@ -18,6 +22,9 @@ builder.Services
     .AddDefaultTokenProviders();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+// Registrar services
+builder.Services.AddScoped<UsuarioService>();
 
 // Add services to the container.
 builder.Services.AddControllers();
